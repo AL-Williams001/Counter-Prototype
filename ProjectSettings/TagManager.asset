@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ball
+  - Basket
   layers:
   - Default
   - TransparentFX
