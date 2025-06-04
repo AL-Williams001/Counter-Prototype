@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; // Ensure you have the TextMeshPro package installed if you want to use TMP instead of Unity's default Text
 
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager Instance; // Singleton instance of the GameManager
 
-    public Text scoreText; // UI Text element to display the score
-    public Text timerText; // UI Text element to display the timer
-    public Text levelText; // UI Text element to display the level
+    public TextMeshProUGUI scoreText; // UI Text element to display the score
+    public TextMeshProUGUI timerText; // UI Text element to display the timer
+    public TextMeshProUGUI levelText; // UI Text element to display the level
     public GameObject gameOverPanel; // UI Panel to display when the game is over
     public GameObject levelCompletePanel; // UI Panel to display when the level is complete
     public Transform basketTransform; // Transform of the basket for positioning
