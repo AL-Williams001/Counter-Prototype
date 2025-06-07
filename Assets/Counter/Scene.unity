@@ -875,7 +875,7 @@ Transform:
   m_GameObject: {fileID: 1374841534}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.794421, y: 5.5, z: -1.18}
+  m_LocalPosition: {x: 0.794421, y: 7, z: 3.47}
   m_LocalScale: {x: 2.33, y: 0.07, z: 2.32}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1063,8 +1063,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 4633301680127559691, guid: b012c142c71d73a4db7b5bca711dfdbd, type: 3}
-  shootForce: 500
   shootPoint: {fileID: 1851622804}
+  minForce: 300
+  maxForce: 3000
+  chargedSpeed: 500
 --- !u!4 &1563696816
 Transform:
   m_ObjectHideFlags: 0
