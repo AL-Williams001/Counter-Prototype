@@ -5,7 +5,7 @@ public class BallShooter : MonoBehaviour
 {
     public GameObject ballPrefab; // The ball prefab to instantiate
     public Transform shootPoint; // The point from which
-    public float minForce = 300f;
+    public float minForce = 600f;
     public float maxForce = 3000f;
     public float chargedSpeed = 500f; // Speed at which the ball is shot the ball will
 

@@ -22,6 +22,12 @@ public class GameManager : MonoBehaviour
     private int currentLevel = 1; // Current level of the game
     private bool gameActive = true; // Flag to check if the game is active
 
+    //Basket movement variables
+    public float basketHeightRange = 7f; // Range of height for the basket movement
+    public float baseBasketSpeed = 5f; // Speed at which the basket moves
+    private float currentBasketSpeed; // Current speed of the basket
+    private bool isBasketMoving = false; // Flag to check if the basket is moving up
+
     void Awake()
     {
         if (Instance == null) Instance = this; // Set the singleton instance
@@ -47,6 +53,14 @@ public class GameManager : MonoBehaviour
         if (timer <= 0) // Check if the timer has reached zero
         {
             GameOver(); // Call the GameOver method
+        }
+
+        if (isBasketMoving && basketTransform != null)
+        {
+            // Move the basket up and down based on the current speed
+            float y = Mathf.PingPong(Time.time * currentBasketSpeed, basketHeightRange) + 1f; // Calculate the new Y position
+            Vector3 pos = basketTransform.position; // Get the current position of the basket
+            basketTransform.position = new Vector3(pos.x, y, pos.z); // Update the basket's position
         }
     }
 
@@ -98,6 +112,10 @@ public class GameManager : MonoBehaviour
         gameActive = true; // Set the game as active
         levelCompletePanel.SetActive(false); // Deactivate the Level Complete panel
         Debug.Log("Loading Level " + currentLevel); // Log a message to the console
+
+        //Increase the basket speed for the next level
+        currentBasketSpeed = baseBasketSpeed + (currentLevel - 2); // Increase the basket speed based on the level
+        isBasketMoving = currentLevel >= 2; // Set the basket moving flag based on the level
     }
 
     System.Collections.IEnumerator MoveBasketUpDown()
