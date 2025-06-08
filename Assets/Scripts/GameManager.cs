@@ -14,6 +14,14 @@ public class GameManager : MonoBehaviour
     public GameObject levelCompletePanel; // UI Panel to display when the level is complete
     public Transform basketTransform; // Transform of the basket for positioning
 
+    //audio
+    public AudioSource audioSource;
+    public AudioClip gameOverSound; // Sound to play when the game is over
+    public AudioClip levelCompleteSound; // Sound to play when the level is complete
+    public AudioClip scoreSound; // Sound to play when the score is updated
+    public AudioClip missSound; // Sound to play when the player misses a shot
+    public AudioClip backgroundMusic; // Sound to play in the main camera
+
     public int targerScore = 10; // Target score to complete the level
     public float levelTime = 60f; // Time limit for the level in seconds
 
@@ -32,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         if (Instance == null) Instance = this; // Set the singleton instance
         else Destroy(gameObject); // Destroy duplicate instances
+
     }
 
 
@@ -68,6 +77,10 @@ public class GameManager : MonoBehaviour
     {
         if (!gameActive) return; // If the game is not active, skip adding score
 
+        audioSource.PlayOneShot(scoreSound);
+        StartCoroutine(ShakeCamera(0.2f, 0.3f));
+
+
         currentScore += score; // Increase the current score by the given score
         UpdateUI(); // Update the UI elements with the new score
 
@@ -88,10 +101,13 @@ public class GameManager : MonoBehaviour
         gameActive = false; // Set the game as inactive
         gameOverPanel.SetActive(true); // Activate the Game Over panel
         Debug.Log("Game Over!"); // Log a message to the console
+
+        audioSource.PlayOneShot(gameOverSound); // Play the game over sound
     }
 
     void LevelComplete()
     {
+    
         gameActive = false; // Set the game as inactive
         levelCompletePanel.SetActive(true); // Activate the Level Complete panel
         Debug.Log("Level Complete!"); // Log a message to the console
@@ -113,9 +129,20 @@ public class GameManager : MonoBehaviour
         levelCompletePanel.SetActive(false); // Deactivate the Level Complete panel
         Debug.Log("Loading Level " + currentLevel); // Log a message to the console
 
+        audioSource.PlayOneShot(levelCompleteSound); // Play the level complete sound
+
         //Increase the basket speed for the next level
         currentBasketSpeed = baseBasketSpeed + (currentLevel - 2); // Increase the basket speed based on the level
         isBasketMoving = currentLevel >= 2; // Set the basket moving flag based on the level
+    }
+
+    public void PlayMissSound()
+    {
+        if (audioSource != null && missSound != null)
+        {
+            audioSource.PlayOneShot(missSound);
+        }
+        Debug.Log("Miss Sound Played!"); // For debugging
     }
 
     System.Collections.IEnumerator MoveBasketUpDown()
@@ -131,7 +158,27 @@ public class GameManager : MonoBehaviour
             );
 
             yield return null;
-        } 
+        }
     }
+    
+    System.Collections.IEnumerator ShakeCamera(float duration, float magnitude)
+    {
+        Vector3 originalPosition = Camera.main.transform.localPosition; // Store the original position of the camera
+        float elapsed = 0.0f; // Initialize elapsed time
+
+        while (elapsed < duration) // Loop until the duration is reached
+        {
+            float x = Random.Range(-1f, 1f) * magnitude; // Generate a random X offset
+            float y = Random.Range(-1f, 1f) * magnitude; // Generate a random Y offset
+
+            Camera.main.transform.localPosition = new Vector3(originalPosition.x + x, originalPosition.y + y, originalPosition.z); // Update the camera position
+
+            elapsed += Time.deltaTime; // Increase elapsed time
+            yield return null; // Wait for the next frame
+        }
+
+        Camera.main.transform.localPosition = originalPosition; // Reset the camera position to the original position
+    }
+    
 
 }
