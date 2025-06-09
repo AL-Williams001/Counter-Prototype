@@ -1,17 +1,19 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallShooter : MonoBehaviour
 {
     public GameObject ballPrefab; // The ball prefab to instantiate
     public Transform shootPoint; // The point from which
-    public float minForce = 600f;
-    public float maxForce = 3000f;
-    public float chargedSpeed = 500f; // Speed at which the ball is shot the ball will
+    public float minForce = 2000f;
+    public float maxForce = 9000f;
+    public float chargedSpeed = 3000f; // Speed at which the ball is shot the ball will
 
     private float currentForce; // Current force applied to the ball
     private bool isCharging; // Flag to check if the player is charging the shot
 
+    public Slider chargeSlider; // UI Slider to visualize the charge level
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +29,7 @@ public class BallShooter : MonoBehaviour
         {
             isCharging = true; // Start charging the shot
             currentForce = minForce; // Reset the force to the minimum
+            chargeSlider.value = currentForce; // Reset the charge slider value
         }
 
         //Continue charging the shot while the left mouse button is held down
@@ -35,13 +38,15 @@ public class BallShooter : MonoBehaviour
             // Increase the force gradually
             currentForce += chargedSpeed * Time.deltaTime;
             currentForce = Mathf.Clamp(currentForce, minForce, maxForce); // Clamp the force between min and max
+            chargeSlider.value = currentForce; // Update the charge slider value
         }
 
         //Shoot the ball when the left mouse button is released
-        if (Input.GetMouseButtonUp(0)) // Check if the left mouse button is released
+        if (Input.GetMouseButtonUp(0) && isCharging) // Check if the left mouse button is released
         {
             ShootBall(); // Call the method to shoot the ball
             isCharging = false; // Stop charging the shot
+            chargeSlider.value = 0; // Reset the charge slider value
         }
 
     }
