@@ -6,14 +6,14 @@ public class BallShooter : MonoBehaviour
 {
     public GameObject ballPrefab; // The ball prefab to instantiate
     public Transform shootPoint; // The point from which
-    public float minForce = 2000f;
-    public float maxForce = 9000f;
-    public float chargedSpeed = 3000f; // Speed at which the ball is shot the ball will
+    public float minForce = 300f;
+    public float maxForce = 3000f;
+    public float chargedSpeed = 1000f; // Speed at which the ball is shot the ball will
 
     private float currentForce; // Current force applied to the ball
     private bool isCharging; // Flag to check if the player is charging the shot
-
     public Slider chargeSlider; // UI Slider to visualize the charge level
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -49,6 +49,7 @@ public class BallShooter : MonoBehaviour
             chargeSlider.value = 0; // Reset the charge slider value
         }
 
+
     }
 
     void ShootBall()
@@ -62,6 +63,8 @@ public class BallShooter : MonoBehaviour
         rb.AddForce(shootDirection.normalized * currentForce); // Apply the force to the ball
 
         currentForce = minForce; // Reset the force for the next shot
+
+
     }
     
 
