@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     private bool gameActive = true; // Flag to check if the game is active
 
     //Basket movement variables
-    public float basketHeightRange = 7f; // Range of height for the basket movement
+    public float basketHeightRange = 9.2f; // Range of height for the basket movement
     public float baseBasketSpeed = 50f; // Speed at which the basket moves
     private float currentBasketSpeed; // Current speed of the basket
     private bool isBasketMoving = false; // Flag to check if the basket is moving up
